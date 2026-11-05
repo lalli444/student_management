@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Pranjal Dwivedi's software engineering and AI/ML student resume">
+  <title>Pranjal Dwivedi | Resume</title>
+  <style>
+    @page {
+      size: Letter;
+      margin: 0.48in 0.56in;
+    }
+
+    :root {
+      color-scheme: light;
+      font-family: Georgia, "Times New Roman", serif;
+      color: #171717;
+      background: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 100%;
+      max-width: 7.38in;
+      margin: 0 auto;
+      font-size: 9.7pt;
+      line-height: 1.23;
+    }
+
+    header {
+      text-align: center;
+      margin: 0 0 15pt;
+    }
+
+    h1 {
+      margin: 0 0 3pt;
+      font-size: 24pt;
+      line-height: 1.08;
+      font-weight: 700;
+      letter-spacing: 0.2pt;
+    }
+
+    .contact {
+      margin: 0;
+      font-size: 8.8pt;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 1px;
+    }
+
+    .separator {
+      padding: 0 4pt;
+      color: #555;
+    }
+
+    section {
+      margin: 0 0 10pt;
+    }
+
+    h2 {
+      margin: 0 0 4pt;
+      padding: 0 0 2pt;
+      border-bottom: 0.6pt solid #676767;
+      font-size: 10.8pt;
+      line-height: 1.1;
+      font-weight: 400;
+      font-variant: small-caps;
+      letter-spacing: 0.45pt;
+      text-transform: uppercase;
+    }
+
+    p {
+      margin: 0 0 4pt;
+    }
+
+    .education-line,
+    .project-heading {
+      margin: 0 0 2pt;
+      font-size: 9.8pt;
+    }
+
+    .education-line strong,
+    .project-heading strong {
+      font-weight: 700;
+    }
+
+    .institution,
+    .technology-line {
+      margin: 0 0 3pt;
+      font-size: 9pt;
+      color: #333;
+    }
+
+    .skills p {
+      margin: 0 0 2pt;
+    }
+
+    .project {
+      margin: 0 0 7pt;
+      break-inside: avoid;
+    }
+
+    .project:last-child {
+      margin-bottom: 0;
+    }
+
+    .project-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8pt;
+    }
+
+    .project-heading a {
+      font-size: 8.8pt;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .technology-line {
+      margin-bottom: 3pt;
+      font-style: italic;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 12pt;
+    }
+
+    li {
+      margin: 0 0 2.5pt;
+      padding-left: 1pt;
+    }
+
+    li:last-child {
+      margin-bottom: 0;
+    }
+
+    .learning {
+      margin-bottom: 0;
+      font-size: 8.8pt;
+    }
+
+    @media screen {
+      body {
+        max-width: 8.5in;
+        min-height: 11in;
+        padding: 0.48in 0.56in;
+        background: #fff;
+        box-shadow: 0 2px 18px rgba(0, 0, 0, 0.14);
+      }
+    }
+
+    @media print {
+      body {
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Pranjal Dwivedi</h1>
+    <p class="contact">
+      Bhopal, Madhya Pradesh
+      <span class="separator">|</span>
+      <a href="https://github.com/lalli444">GitHub</a>
+      <span class="separator">|</span>
+      <a href="https://www.linkedin.com/in/pranjal-dwivedi-a63b60378/">LinkedIn</a>
+    </p>
+  </header>
+
+  <main>
+    <section aria-labelledby="summary">
+      <h2 id="summary">Professional Summary</h2>
+      <p>
+        Computer Science Engineering (AI &amp; ML) undergraduate at Technocrats Institute of Technology &amp; Science,
+        RGPV, with project experience building Python REST APIs and data workflows. Interested in backend software
+        engineering and AI/ML; currently strengthening machine-learning and problem-solving fundamentals.
+      </p>
+    </section>
+
+    <section aria-labelledby="education">
+      <h2 id="education">Education</h2>
+      <p class="education-line"><strong>B.Tech., Computer Science Engineering (AI &amp; ML)</strong></p>
+      <p class="institution">Technocrats Institute of Technology &amp; Science, RGPV | Bhopal, Madhya Pradesh | 3rd Semester</p>
+    </section>
+
+    <section class="skills" aria-labelledby="skills">
+      <h2 id="skills">Technical Skills</h2>
+      <p><strong>Languages:</strong> Python, C++, SQL, JavaScript</p>
+      <p><strong>Backend:</strong> FastAPI, REST APIs, SQLAlchemy, Pydantic</p>
+      <p><strong>Databases:</strong> PostgreSQL, SQLite</p>
+      <p><strong>Data:</strong> Pandas</p>
+      <p><strong>Tools:</strong> Git, GitHub, Docker, VS Code</p>
+      <p><strong>Frontend:</strong> HTML, CSS</p>
+    </section>
+
+    <section aria-labelledby="projects">
+      <h2 id="projects">Projects</h2>
+
+      <article class="project">
+        <p class="project-heading">
+          <strong>Personal Finance Ingestion API</strong>
+          <a href="https://github.com/lalli444/Personal-Finance-Ingestion-API">GitHub Repository</a>
+        </p>
+        <p class="technology-line">Python, FastAPI, SQLAlchemy, Pydantic, Pandas, PostgreSQL, Docker</p>
+        <ul>
+          <li>Implemented JSON and CSV bank-statement ingestion with Pandas column normalization, row validation, and error reporting.</li>
+          <li>Built SHA-256 transaction fingerprinting to detect duplicates; added account/date/category filters, pagination, and category/month spending summaries.</li>
+          <li>Configured PostgreSQL persistence with Docker Compose and tested API workflows against an in-memory SQLite database.</li>
+        </ul>
+      </article>
+
+      <article class="project">
+        <p class="project-heading">
+          <strong>Student Management System</strong>
+          <a href="https://github.com/lalli444/student_management">GitHub Repository</a>
+        </p>
+        <p class="technology-line">Python, FastAPI, SQLAlchemy, PostgreSQL, SQLite, JavaScript, HTML, CSS</p>
+        <ul>
+          <li>Developed a FastAPI CRUD backend and responsive JavaScript frontend for student-record workflows.</li>
+          <li>Implemented validated data models, computed letter grades, course filtering, sorting, search, and pagination.</li>
+          <li>Configured PostgreSQL/SQLite persistence and JSON-based initial data seeding.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section aria-labelledby="learning">
+      <h2 id="learning">Currently Learning</h2>
+      <p class="learning">NumPy, machine-learning fundamentals, and data structures and algorithms.</p>
+    </section>
+  </main>
+</body>
+</html>
