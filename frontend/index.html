@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container nav-bar">
+            <a href="#" class="brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <h1>EduTrack</h1>
+                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: -2px;">Student Management System</p>
+                </div>
+            </a>
+
+            <div class="nav-actions">
+                <div id="apiStatus" class="status-badge" title="Connecting to Backend API...">
+                    <span class="status-dot"></span>
+                    <span id="apiStatusText">Checking API...</span>
+                </div>
+                <button id="btnSettings" class="btn btn-outline btn-sm" title="Configure API Endpoint">
+                    <i class="fa-solid fa-gear"></i> API Config
+                </button>
+                <button id="btnOpenAddModal" class="btn btn-primary">
+                    <i class="fa-solid fa-plus"></i> Add Student
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Stats Summary Ribbon -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+                <div class="stat-info">
+                    <h3>Total Students</h3>
+                    <div class="stat-value" id="statTotalStudents">0</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#ecfdf5; color:#10b981;"><i class="fa-solid fa-chart-line"></i></div>
+                <div class="stat-info">
+                    <h3>Average Marks</h3>
+                    <div class="stat-value" id="statAvgMarks">0%</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#eff6ff; color:#3b82f6;"><i class="fa-solid fa-book-bookmark"></i></div>
+                <div class="stat-info">
+                    <h3>Active Courses</h3>
+                    <div class="stat-value" id="statCoursesCount">0</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background:#fef3c7; color:#d97706;"><i class="fa-solid fa-award"></i></div>
+                <div class="stat-info">
+                    <h3>Top Grade (A/A+)</h3>
+                    <div class="stat-value" id="statTopGradeCount">0</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search, Filter & Sort Controls -->
+        <section class="controls-bar">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search by student name, ID, or email...">
+            </div>
+
+            <div class="filter-group">
+                <select id="courseFilter" class="select-control">
+                    <option value="">All Courses</option>
+                    <option value="Python">Python</option>
+                    <option value="Django">Django</option>
+                    <option value="Data Science">Data Science</option>
+                    <option value="Web Development">Web Development</option>
+                    <option value="JAVA">JAVA</option>
+                </select>
+
+                <select id="sortBy" class="select-control">
+                    <option value="marks">Sort by: Marks</option>
+                    <option value="name">Sort by: Name</option>
+                    <option value="age">Sort by: Age</option>
+                    <option value="id">Sort by: Student ID</option>
+                </select>
+
+                <button id="btnOrderToggle" class="btn btn-outline" title="Toggle Ascending / Descending">
+                    <i class="fa-solid fa-arrow-down-wide-short" id="orderIcon"></i>
+                    <span id="orderText">Desc</span>
+                </button>
+
+                <button id="btnRefresh" class="btn btn-outline" title="Reload Data">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Students Table -->
+        <section class="table-responsive">
+            <table class="student-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Student Name</th>
+                        <th>Age</th>
+                        <th>Email</th>
+                        <th>Course</th>
+                        <th>Marks</th>
+                        <th>Grade</th>
+                        <th style="text-align: right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="studentsTableBody">
+                    <!-- Loaded dynamically via JavaScript -->
+                </tbody>
+            </table>
+
+            <!-- Loading & Empty State -->
+            <div id="loadingState" class="state-container">
+                <div class="spinner"></div>
+                <p>Loading student records from API...</p>
+            </div>
+
+            <div id="emptyState" class="state-container" style="display: none;">
+                <i class="fa-regular fa-folder-open" style="font-size: 2.5rem; color: var(--text-muted); margin-bottom: 0.75rem;"></i>
+                <h3>No Students Found</h3>
+                <p>No student records matched your search or filters.</p>
+            </div>
+        </section>
+
+        <!-- Pagination Controls -->
+        <section class="pagination-container">
+            <div class="pagination-info" id="paginationInfo">
+                Showing records 1 - 7 of 7
+            </div>
+
+            <div class="pagination-controls">
+                <select id="pageSizeSelect" class="select-control" style="padding: 0.4rem 1.75rem 0.4rem 0.6rem;">
+                    <option value="5">5 per page</option>
+                    <option value="10" selected>10 per page</option>
+                    <option value="25">25 per page</option>
+                </select>
+
+                <button id="btnPrevPage" class="btn btn-outline btn-sm" disabled>
+                    <i class="fa-solid fa-chevron-left"></i> Prev
+                </button>
+                <span id="currentPageLabel" style="font-size: 0.875rem; font-weight: 600; padding: 0 0.5rem;">Page 1 of 1</span>
+                <button id="btnNextPage" class="btn btn-outline btn-sm" disabled>
+                    Next <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Add / Edit Student Modal -->
+    <div id="studentModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Student</h2>
+                <button type="button" class="close-btn" id="btnCloseModal">&times;</button>
+            </div>
+
+            <form id="studentForm">
+                <div class="form-group">
+                    <label class="form-label" for="studentId">Student ID</label>
+                    <input type="text" id="studentId" class="form-control" placeholder="e.g. S008" required>
+                    <div class="form-help">Unique identifier (e.g., S001, S002). Cannot be edited once created.</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="studentName">Full Name</label>
+                    <input type="text" id="studentName" class="form-control" placeholder="e.g. John Doe" required minlength="2" maxlength="50">
+                    <div class="form-help">Must contain only letters and spaces.</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="studentEmail">Email Address</label>
+                    <input type="email" id="studentEmail" class="form-control" placeholder="e.g. student@example.com" required>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label" for="studentAge">Age</label>
+                        <input type="number" id="studentAge" class="form-control" placeholder="18-100" min="1" max="100" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="studentMarks">Marks (0-100)</label>
+                        <input type="number" id="studentMarks" class="form-control" placeholder="0-100" min="0" max="100" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="studentCourse">Course</label>
+                    <input type="text" id="studentCourse" class="form-control" placeholder="e.g. Python, Django, Data Science" required maxlength="50">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="btnCancelModal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="btnSaveStudent">
+                        <i class="fa-solid fa-floppy-disk"></i> Save Student
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- API Settings Modal -->
+    <div id="settingsModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>API Endpoint Settings</h2>
+                <button type="button" class="close-btn" id="btnCloseSettingsModal">&times;</button>
+            </div>
+            <div>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                    Configure the FastAPI backend URL. When deployed, paste your public Render URL below.
+                </p>
+                <div class="form-group">
+                    <label class="form-label" for="apiUrlInput">Backend Base URL</label>
+                    <input type="url" id="apiUrlInput" class="form-control" placeholder="http://127.0.0.1:8000">
+                </div>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                    <button type="button" class="btn btn-outline btn-sm" id="btnSetLocalhost">Use Localhost (8000)</button>
+                    <button type="button" class="btn btn-outline btn-sm" id="btnResetDefault">Reset to Auto</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnSaveSettings">Apply & Reload</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

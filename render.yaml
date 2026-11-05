@@ -1,0 +1,26 @@
+services:
+  # FastAPI Web Service
+  - type: web
+    name: student-management-backend
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn backend.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: DATABASE_URL
+        fromDatabase:
+          name: student-management-db
+          property: connectionString
+      - key: ALLOWED_ORIGINS
+        value: "*"
+
+# Free-Tier PostgreSQL Database
+databases:
+  - name: student-management-db
+    region: oregon
+    plan: free
+    databaseName: student_management
+    user: student_admin
